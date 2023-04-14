@@ -1,20 +1,22 @@
 package main
 
-type CategoryError struct {
-	requestedCategory string
-}
+import "fmt"
 
-func (e *CategoryError) Error() string {
-	return "Category " + e.requestedCategory + " dose not exist"
-}
+//type CategoryError struct {
+//	requestedCategory string
+//}
+//
+//func (e *CategoryError) Error() string {
+//	return "Category " + e.requestedCategory + " dose not exist"
+//}
 
 type ChannelMessage struct {
-	Category string
-	Total    float64
-	*CategoryError
+	Category      string
+	Total         float64
+	CategoryError error
 }
 
-func (slice ProductSlice) TotalPrice(category string) (total float64, err *CategoryError) {
+func (slice ProductSlice) TotalPrice(category string) (total float64, err error) {
 	productCount := 0
 	for _, p := range slice {
 		if p.Category == category {
@@ -23,7 +25,8 @@ func (slice ProductSlice) TotalPrice(category string) (total float64, err *Categ
 		}
 	}
 	if productCount == 0 {
-		err = &CategoryError{requestedCategory: category}
+		//err = errors.New("cannot find category")
+		err = fmt.Errorf("cannot fint category: %v", category)
 	}
 	return
 }
