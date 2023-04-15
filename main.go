@@ -23,7 +23,8 @@ func main() {
 		if message.CategoryError == nil {
 			fmt.Println(message.Category, "Total:", ToCurrenct(message.Total))
 		} else {
-			fmt.Println(message.CategoryError, "(no such category)")
+			//fmt.Println(message.CategoryError, "(no such category)")
+			panic(message.CategoryError)
 		}
 	}
 }
